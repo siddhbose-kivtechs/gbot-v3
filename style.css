@@ -1,0 +1,479 @@
+
+/* Gbot - gemini theme with Google-like styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #ff80ab, #8e24aa);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Layout Containers */
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+  height: 70vh;
+  max-width: 900px;
+  max-height: 800px;
+  background-color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Top Header */
+.top {
+  flex: 0 0 80px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  z-index: 10;
+}
+
+.AvatarBot {
+  display: grid;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.AvatarBot:after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 100%;
+  border: 1px solid white;
+  background: #69de40;
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+}
+
+.AvatarBot img {
+  width: 50px;
+  height: 50px;
+}
+
+.InfoBot {
+  margin-left: 17px;
+}
+
+.TitleBot {
+  font-size: 24px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #333;
+}
+
+/* Status indicator */
+.status {
+  color: #9ba6b3;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.status-indicator.online {
+  background-color: #69de40; /* Green for online */
+}
+
+.status-indicator.offline {
+  background-color: #ff5252; /* Red for offline */
+}
+
+.status-indicator.busy {
+  background-color: #4285f4; /* Blue for busy */
+}
+
+.model-selector {
+  margin-left: auto;
+  background-color: #f1f3f4;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5f6368;
+}
+
+/* Chat Content Area */
+.ContentChat {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f8f9fa;
+  scroll-behavior: smooth;
+}
+
+.ContentChat::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ContentChat::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 128, 171, 0.7);
+  border-radius: 3px;
+}
+
+.ContentChat::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Message Styles */
+.massage {
+  margin: 16px 0;
+  position: relative;
+}
+
+.massage[data-user="true"] {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-response {
+  background: #e8f0fe;
+  color: #174ea6;
+  border: 1px solid #d2e3fc;
+  box-shadow: 0 2px 6px rgba(66, 133, 244, 0.1);
+  border-radius: 18px 18px 0 18px;
+  max-width: 85%;
+  padding: 14px 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  position: relative;
+  white-space: pre-line;
+}
+
+.bot-response {
+  width: 85%;
+  background: linear-gradient(135deg, #ff80ab, #c94f9d);
+  color: #fff;
+  border: none;
+  border-radius: 18px 18px 18px 0;
+  padding: 16px 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 12px rgba(142, 36, 170, 0.2);
+  font-size: 16px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.captionBot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.captionBot img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+/* Copy button */
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.bot-response:hover .copy-btn,
+.user-response:hover .copy-btn {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.copy-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+/* Timestamps */
+.time-stamp {
+  font-size: 11px;
+  margin-top: 8px;
+  opacity: 0.7;
+  text-align: right;
+}
+
+/* Message typing animation */
+.typing-indicator {
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  margin: 0 2px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+
+.typing-indicator:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+/* Input area */
+.BoxSentMSG {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+/* Improved dynamic textarea */
+.InputMSG {
+  outline: none;
+  border: none;
+  width: 100%;
+  min-height: 50px;
+  max-height: 120px;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  border-radius: 25px;
+  background: #f1f3f4;
+  transition: background 0.3s ease, height 0.2s ease;
+  font-family: 'Source Sans Pro', sans-serif;
+  overflow-y: auto;
+}
+
+.InputMSG:focus {
+  background: #e8f0fe;
+}
+
+.InputMSG::placeholder {
+  color: #9ba6b2;
+}
+
+/* Send button */
+.send-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff80ab, #8e24aa);
+  min-width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(142, 36, 170, 0.3);
+}
+
+.send-icon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(142, 36, 170, 0.4);
+}
+
+.send-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Footer */
+.by {
+  flex: 0 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #eee;
+  background-color: white;
+  padding: 5px 0;
+  font-size: 12px;
+}
+
+.by span {
+  color: #9ba6b2;
+  font-weight: 400;
+}
+
+.by a {
+  font-weight: 600;
+  margin-left: 3px;
+  text-decoration: none;
+}
+
+/* Markdown content styling */
+.markdown-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.markdown-content pre {
+  white-space: pre-wrap;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 10px;
+  margin: 10px 0;
+  overflow-x: auto;
+}
+
+.markdown-content code {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+
+.markdown-content li {
+  margin-bottom: 5px;
+}
+
+.markdown-content p {
+  margin-bottom: 10px;
+}
+
+.markdown-content h1, .markdown-content h2, .markdown-content h3 {
+  margin: 15px 0 10px 0;
+}
+
+/* Utility classes */
+.none {
+  display: none !important;
+}
+
+.error {
+  color: #ff5252;
+  font-weight: 600;
+}
+
+/* Mobile responsiveness */
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+    height: 90vh;
+    max-width: none;
+    max-height: none;
+    margin: 20px auto;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  body {
+    padding: 0;
+    margin: 0;
+    background: white;
+  }
+  
+  .top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  
+  .ContentChat {
+    margin-top: 80px;
+    height: calc(100vh - 160px);
+  }
+  
+  .BoxSentMSG {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  
+  .by {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+}
+
+/* Input area */
+.BoxSentMSG {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end; /* Changed from center to flex-end for better alignment with expanding textarea */
+  width: 100%;
+  padding: 10px 20px;
+  background: white;
+  border-top: 1px solid #eee;
+}
+
+/* Improved dynamic textarea */
+.InputMSG {
+  outline: none;
+  border: none;
+  width: 100%;
+  min-height: 50px;
+  max-height: 120px;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: none;
+  border-radius: 25px;
+  background: #f1f3f4;
+  transition: background 0.3s ease;
+  font-family: 'Source Sans Pro', sans-serif;
+  overflow-y: auto;
+}
