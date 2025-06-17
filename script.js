@@ -12,7 +12,9 @@ const status_indicator = document.querySelector(".status-indicator");
 // const BASE_URL = 'https://hono-vercel-chat.vercel.app'; // Production
 // const BASE_URL = 'http://localhost:8000'; // Development
 // EC-2
-const BASE_URL = 'http://18.234.226.123:5000';
+// const BASE_URL = 'http://18.234.226.123:5000';
+// CF
+const BASE_URL = 'http://gbot-backend.kneotech.cloud';
 const SERVER_URL = `${BASE_URL}/api/chat`;
 
 // Configure marked.js with syntax highlighting
