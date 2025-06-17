@@ -14,7 +14,7 @@ const status_indicator = document.querySelector(".status-indicator");
 // EC-2
 // const BASE_URL = 'http://18.234.226.123:5000';
 // CF
-const BASE_URL = 'http://gbot-backend.kneotech.cloud';
+const BASE_URL = 'https://gbot-backend.kneotech.cloud';
 const SERVER_URL = `${BASE_URL}/api/chat`;
 
 // Configure marked.js with syntax highlighting
